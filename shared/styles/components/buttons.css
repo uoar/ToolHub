@@ -1,0 +1,421 @@
+/**
+ * ============================================
+ * 🔘 BUTTON COMPONENT SYSTEM
+ * ============================================
+ * 架构层级: Layer 6 - Components (ITCSS)
+ * 用途: 统一的按钮组件样式
+ * 设计参考: iOS Human Interface Guidelines
+ * BEM命名: .btn, .btn--variant, .btn__element, .btn--modifier
+ * ============================================
+ */
+
+/* ============================================
+   Base Button Styles
+   ============================================ */
+.btn {
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    
+    /* Typography */
+    font-family: var(--font-family-base);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    
+    /* Sizing */
+    height: var(--btn-height-md);
+    padding: 0 var(--btn-padding-x-md);
+    
+    /* Visual */
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    user-select: none;
+    
+    /* Transitions */
+    transition: all var(--transition-base);
+    
+    /* Touch target (iOS 最小 44px) */
+    min-height: 44px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--theme-focus-ring);
+    outline-offset: 2px;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ============================================
+   Button Variants
+   ============================================ */
+
+/* Primary Button - iOS 蓝色 */
+.btn--primary,
+.btn.primary {
+    background: var(--theme-btn-primary-bg);
+    color: var(--theme-btn-primary-text);
+    box-shadow: var(--shadow-button);
+}
+
+.btn--primary:hover,
+.btn.primary:hover {
+    background: var(--theme-btn-primary-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.btn--primary:active,
+.btn.primary:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Secondary Button - 灰色背景 */
+.btn--secondary,
+.btn.secondary {
+    background: var(--theme-btn-secondary-bg);
+    color: var(--theme-btn-secondary-text);
+}
+
+.btn--secondary:hover,
+.btn.secondary:hover {
+    background: var(--theme-btn-secondary-hover);
+}
+
+/* Outline Button - 描边按钮 */
+.btn--outline {
+    background: transparent;
+    color: var(--theme-info);
+    border: 1.5px solid var(--theme-info);
+    box-shadow: none;
+}
+
+.btn--outline:hover {
+    background: var(--theme-info);
+    color: white;
+}
+
+/* Ghost Button - 无边框透明 */
+.btn--ghost {
+    background: transparent;
+    color: var(--theme-primary);
+    box-shadow: none;
+}
+
+.btn--ghost:hover {
+    background: var(--theme-hover-bg);
+}
+
+/* Danger Button - 危险操作（灰色，非红色） */
+.btn--danger,
+.btn.danger {
+    background: var(--theme-btn-secondary-bg);
+    color: var(--theme-text-secondary);
+}
+
+.btn--danger:hover,
+.btn.danger:hover {
+    background: var(--theme-btn-secondary-hover);
+}
+
+/* Success Button - 成功/确认 */
+.btn--success {
+    background: var(--theme-success);
+    color: white;
+    box-shadow: var(--shadow-button);
+}
+
+.btn--success:hover {
+    background: #28B848;
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   Button Sizes
+   ============================================ */
+
+/* Small Button */
+.btn--sm,
+.btn.small {
+    height: var(--btn-height-sm);
+    padding: 0 var(--btn-padding-x-sm);
+    font-size: var(--font-sm);
+    min-height: 32px;
+}
+
+/* Medium Button (默认) */
+.btn--md {
+    height: var(--btn-height-md);
+    padding: 0 var(--btn-padding-x-md);
+    font-size: var(--font-base);
+}
+
+/* Large Button */
+.btn--lg,
+.btn.large {
+    height: var(--btn-height-lg);
+    padding: 0 var(--btn-padding-x-lg);
+    font-size: var(--font-lg);
+    min-height: 56px;
+}
+
+/* Full Width Button */
+.btn--block,
+.btn.full-width {
+    width: 100%;
+}
+
+/* ============================================
+   Icon Buttons
+   ============================================ */
+
+/* Square icon button */
+.btn--icon,
+.icon-btn {
+    width: var(--btn-height-md);
+    height: var(--btn-height-md);
+    padding: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--theme-primary);
+    border: 1px solid var(--theme-border-light);
+    transition: all var(--transition-fast);
+}
+
+.btn--icon:hover,
+.icon-btn:hover {
+    background: var(--theme-hover-bg);
+    border-color: var(--theme-info);
+    color: var(--theme-info);
+}
+
+.btn--icon.primary,
+.icon-btn.primary {
+    background: var(--theme-btn-primary-bg);
+    color: white;
+    border-color: var(--theme-btn-primary-bg);
+}
+
+.btn--icon.primary:hover,
+.icon-btn.primary:hover {
+    background: var(--theme-btn-primary-hover);
+    border-color: var(--theme-btn-primary-hover);
+}
+
+/* Small icon button */
+.btn--icon-sm,
+.icon-btn.small {
+    width: var(--btn-height-sm);
+    height: var(--btn-height-sm);
+}
+
+/* Large icon button */
+.btn--icon-lg,
+.icon-btn.large {
+    width: var(--btn-height-lg);
+    height: var(--btn-height-lg);
+}
+
+/* ============================================
+   Button with Icons
+   ============================================ */
+.btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.btn--sm svg {
+    width: 14px;
+    height: 14px;
+}
+
+.btn--lg svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Icon only (no gap) */
+.btn--icon-only {
+    gap: 0;
+}
+
+/* ============================================
+   Button Group
+   ============================================ */
+.btn-group {
+    display: inline-flex;
+    gap: var(--spacing-2);
+}
+
+.btn-group .btn {
+    margin: 0;
+}
+
+/* Attached buttons */
+.btn-group--attached {
+    gap: 0;
+}
+
+.btn-group--attached .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+
+.btn-group--attached .btn:first-child {
+    border-top-left-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-lg);
+    margin-left: 0;
+}
+
+.btn-group--attached .btn:last-child {
+    border-top-right-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+}
+
+/* Vertical button group */
+.btn-group--vertical {
+    flex-direction: column;
+}
+
+/* ============================================
+   Loading State
+   ============================================ */
+.btn--loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.btn--loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Legacy Class Names (兼容旧代码)
+   ============================================ */
+.primary-btn {
+    background: var(--theme-btn-primary-bg);
+    color: var(--theme-btn-primary-text);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 12px 24px;
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-button);
+}
+
+.primary-btn:hover {
+    background: var(--theme-btn-primary-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    background: var(--theme-btn-secondary-bg);
+    color: var(--theme-btn-secondary-text);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 12px 24px;
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.secondary-btn:hover {
+    background: var(--theme-btn-secondary-hover);
+}
+
+.add-btn,
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.add-btn.primary,
+.action-btn.primary {
+    background: var(--theme-btn-primary-bg);
+    color: white;
+}
+
+.add-btn.primary:hover,
+.action-btn.primary:hover {
+    background: var(--theme-btn-primary-hover);
+}
+
+.bottom-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.bottom-btn.primary {
+    background: var(--theme-btn-primary-bg);
+    color: white;
+    box-shadow: var(--shadow-button);
+}
+
+.bottom-btn.primary:hover {
+    background: var(--theme-btn-primary-hover);
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.modal-btn.primary {
+    background: var(--theme-btn-primary-bg);
+    color: white;
+}
+
+.modal-btn.primary:hover {
+    background: var(--theme-btn-primary-hover);
+}

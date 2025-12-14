@@ -1,0 +1,185 @@
+/**
+ * ============================================
+ * 🎯 MAIN CSS ENTRY POINT
+ * ============================================
+ * Picker Wheel 项目主样式文件
+ * 
+ * 架构: ITCSS (Inverted Triangle CSS)
+ * 层级顺序从通用到具体，从低优先级到高优先级
+ * 
+ * 使用方法:
+ * <link rel="stylesheet" href="/shared/styles/main.css">
+ * 
+ * 修改主题:
+ * 只需修改 base/variables.css 中的颜色变量
+ * ============================================
+ */
+
+/* ============================================
+   LAYER 1: VARIABLES & SETTINGS
+   定义设计令牌（颜色、间距、字体等）
+   ============================================ */
+@import url('base/variables.css');
+
+/* ============================================
+   LAYER 2: RESET & NORMALIZE
+   重置浏览器默认样式，建立一致基线
+   ============================================ */
+@import url('base/reset.css');
+
+/* ============================================
+   LAYER 3: BASE & TYPOGRAPHY
+   全局基础样式和字体系统
+   ============================================ */
+@import url('base/typography.css');
+
+/* ============================================
+   LAYER 4: LAYOUTS
+   布局相关样式（网格、容器等）
+   ============================================ */
+/* 暂时无独立 layout 文件，可扩展 */
+
+/* ============================================
+   LAYER 5: COMPONENTS - 组件样式
+   可复用的 UI 组件
+   
+   ⚠️ 注意: navigation.css 不在此引入
+   导航栏必须在每个页面单独引入，确保最高优先级
+   请在页面 HTML 的最后引入:
+   <link rel="stylesheet" href="[path]/shared/styles/components/navigation.css">
+   ============================================ */
+@import url('components/buttons.css');
+@import url('components/forms.css');
+@import url('components/modals.css');
+@import url('components/cards.css');
+
+/* ============================================
+   LAYER 6: UTILITIES - 工具类
+   单一职责的原子类，最高优先级
+   ============================================ */
+@import url('utilities/utilities.css');
+
+/* ============================================
+   GLOBAL BODY & APP STYLES
+   ============================================ */
+body {
+    background-color: var(--theme-bg-secondary);
+    color: var(--theme-text-primary);
+    overflow-x: hidden;
+}
+
+.app-content {
+    padding-top: 0;
+    min-height: 100vh;
+}
+
+/* ============================================
+   SCROLLBAR CUSTOMIZATION - macOS Style
+   ============================================ */
+
+/* 通用滚动条 */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.3s ease;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.12);
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation utility classes */
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slideUp {
+    animation: slideUp 0.3s ease-out;
+}
+
+.animate-slideDown {
+    animation: slideDown 0.3s ease-out;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .nav,
+    .modal,
+    .btn,
+    button {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+}

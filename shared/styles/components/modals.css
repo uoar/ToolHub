@@ -1,0 +1,345 @@
+/**
+ * ============================================
+ * 🪟 MODAL COMPONENT
+ * ============================================
+ * 架构层级: Layer 6 - Components (ITCSS)
+ * 用途: 模态对话框/弹窗样式
+ * 设计参考: iOS Sheet & macOS Modal
+ * ============================================
+ */
+
+/* ============================================
+   Modal Container
+   ============================================ */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modal);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* ============================================
+   Modal Backdrop
+   ============================================ */
+.modal-backdrop,
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: modal-fade-in var(--transition-base);
+}
+
+@keyframes modal-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   Modal Content
+   ============================================ */
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: var(--radius-2xl);
+    padding: var(--modal-padding);
+    box-shadow: var(--shadow-modal);
+    width: 90%;
+    max-width: var(--modal-width-md);
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: calc(var(--z-modal) + 1);
+    animation: modal-slide-up 0.3s var(--ease-apple);
+}
+
+@keyframes modal-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Modal sizes */
+.modal-content--sm {
+    max-width: var(--modal-width-sm);
+}
+
+.modal-content--lg {
+    max-width: var(--modal-width-lg);
+}
+
+.modal-content--full {
+    width: 95%;
+    max-width: 1400px;
+    max-height: 90vh;
+}
+
+/* ============================================
+   Modal Scrollbar - macOS Floating Style
+   ============================================ */
+.modal-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+    margin: var(--spacing-4) 0;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color var(--transition-base);
+}
+
+.modal-content:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    background-clip: padding-box;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+/* Firefox */
+.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+/* ============================================
+   Modal Header
+   ============================================ */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-5);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--theme-border-primary);
+}
+
+.modal-title {
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--theme-text-primary);
+    margin: 0;
+}
+
+.modal-subtitle {
+    font-size: var(--font-sm);
+    color: var(--theme-text-secondary);
+    margin-top: var(--spacing-1);
+}
+
+/* ============================================
+   Modal Close Button
+   ============================================ */
+.modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: var(--theme-text-secondary);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    background: var(--theme-hover-bg);
+    color: var(--theme-primary);
+}
+
+.modal-close:active {
+    background: var(--theme-active-bg);
+    transform: scale(0.95);
+}
+
+/* iOS style close icon */
+.modal-close::before {
+    content: '✕';
+}
+
+/* ============================================
+   Modal Body
+   ============================================ */
+.modal-body {
+    margin-bottom: var(--spacing-5);
+    color: var(--theme-text-primary);
+}
+
+.modal-body p {
+    margin-bottom: var(--spacing-3);
+    line-height: var(--line-height-relaxed);
+}
+
+.modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   Modal Footer / Actions
+   ============================================ */
+.modal-footer,
+.modal-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-5);
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--theme-border-primary);
+}
+
+/* Reverse order (Cancel on left, Primary on right) */
+.modal-footer--reverse,
+.modal-actions--reverse {
+    flex-direction: row-reverse;
+}
+
+/* Center aligned */
+.modal-footer--center {
+    justify-content: center;
+}
+
+/* Full width buttons */
+.modal-footer .btn,
+.modal-actions .btn,
+.modal-actions .modal-btn {
+    flex: 1;
+}
+
+/* ============================================
+   Modal Hints & Messages
+   ============================================ */
+.modal-hint {
+    font-size: var(--font-sm);
+    color: var(--theme-text-tertiary);
+    padding: var(--spacing-3);
+    background: var(--theme-bg-tertiary);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-4) 0;
+}
+
+.modal-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    background: rgba(255, 59, 48, 0.1);
+    border-left: 3px solid var(--theme-danger);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-4) 0;
+}
+
+.modal-warning__icon {
+    color: var(--theme-danger);
+    font-size: var(--font-lg);
+    flex-shrink: 0;
+}
+
+.modal-warning__text {
+    font-size: var(--font-sm);
+    color: var(--theme-danger);
+}
+
+/* ============================================
+   iOS-style Action Sheet
+   ============================================ */
+.modal--sheet .modal-content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    animation: modal-slide-up-sheet 0.3s var(--ease-apple);
+}
+
+@keyframes modal-slide-up-sheet {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.modal--sheet .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal--sheet .modal-title {
+    font-size: var(--font-lg);
+    text-align: center;
+    width: 100%;
+}
+
+/* Sheet handle */
+.modal--sheet .modal-content::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 5px;
+    background: var(--theme-border-light);
+    border-radius: 3px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+        padding: var(--spacing-5);
+    }
+    
+    .modal-title {
+        font-size: var(--font-xl);
+    }
+    
+    .modal-footer,
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .modal-footer .btn,
+    .modal-actions .btn {
+        width: 100%;
+    }
+}

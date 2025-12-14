@@ -1,0 +1,320 @@
+/**
+ * ============================================
+ * 🔄 CSS RESET & NORMALIZE
+ * ============================================
+ * 架构层级: Layer 2 - Reset (ITCSS)
+ * 用途: 重置浏览器默认样式，建立一致的基线
+ * 基于: Modern CSS Reset + iOS-optimized tweaks
+ * ============================================
+ */
+
+/* ============================================
+   Box Sizing Reset
+   ============================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   Document & Root
+   ============================================ */
+html {
+    /* iOS Safari 防止旋转时字体大小调整 */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    
+    /* 平滑滚动 */
+    scroll-behavior: smooth;
+    
+    /* 防止水平滚动 */
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    
+    /* iOS-style 字体渲染优化 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* 防止iOS上的点击高亮 */
+    -webkit-tap-highlight-color: transparent;
+    
+    /* 默认字体和行高 */
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-normal);
+    
+    /* iOS 弹性滚动 */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   Typography Reset
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+p, ul, ol, dl, dd, blockquote, figure {
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+    
+    /* iOS Safari 禁用默认点击效果 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+/* ============================================
+   Lists
+   ============================================ */
+ul, ol {
+    list-style: none;
+}
+
+/* ============================================
+   Images & Media
+   ============================================ */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+img {
+    border-style: none;
+}
+
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+/* ============================================
+   Forms
+   ============================================ */
+button,
+input,
+optgroup,
+select,
+textarea {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: inherit;
+    color: inherit;
+}
+
+button,
+input {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+/* iOS Safari 样式重置 */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+    appearance: button;
+    cursor: pointer;
+}
+
+/* 移除内边距和边框 */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+
+/* iOS 输入框样式重置 */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+
+/* 移除 iOS Safari 中搜索框的取消按钮 */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+}
+
+/* 数字输入框隐藏上下箭头 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Textarea 调整 */
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+
+/* Checkbox & Radio */
+input[type="checkbox"],
+input[type="radio"] {
+    padding: 0;
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 0;
+    text-align: left;
+}
+
+/* ============================================
+   Interactive Elements
+   ============================================ */
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+details {
+    display: block;
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+/* 隐藏但保持可访问性 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* 键盘导航时显示焦点，鼠标点击时隐藏 */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--theme-focus-ring);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Misc Elements
+   ============================================ */
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+    border: 0;
+    border-top: 1px solid var(--theme-border-primary);
+    margin: var(--spacing-4) 0;
+}
+
+pre,
+code,
+kbd,
+samp {
+    font-family: var(--font-family-mono);
+    font-size: 1em;
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline dotted;
+}
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+/* ============================================
+   Disabled State
+   ============================================ */
+[disabled],
+[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

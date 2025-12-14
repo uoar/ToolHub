@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Frontend Tools</title>
+    <link rel="stylesheet" href="../shared/styles/main.css">
+    <style>
+        /* 页面样式必须在 navigation.css 之前，避免覆盖导航栏 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--ios-gray-bg);
+            min-height: 100vh;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl);
+            padding-top: calc(var(--nav-height) + var(--spacing-2xl));
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header h1 {
+            font-size: var(--font-3xl);
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-header p {
+            font-size: var(--font-lg);
+            color: var(--ios-gray);
+        }
+
+        .settings-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+            margin-bottom: var(--spacing-xl);
+            animation: fadeIn 1s ease-out both;
+        }
+
+        .settings-card:nth-of-type(1) {
+            animation-delay: 0.4s;
+        }
+
+        .settings-card:nth-of-type(2) {
+            animation-delay: 0.5s;
+        }
+
+        .settings-card:nth-of-type(3) {
+            animation-delay: 0.6s;
+        }
+
+        .settings-section {
+            margin-bottom: var(--spacing-2xl);
+            padding-bottom: var(--spacing-2xl);
+            border-bottom: 1px solid var(--ios-gray-lighter);
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-title {
+            font-size: var(--font-xl);
+            font-weight: 600;
+            color: var(--theme-text-primary);
+        }
+
+        .help-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--ios-gray);
+            cursor: help;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .help-icon:hover {
+            color: var(--theme-info);
+            transform: scale(1.1);
+        }
+
+        .section-description {
+            font-size: var(--font-base);
+            color: var(--ios-gray);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        .section-description a {
+            color: var(--theme-info);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .section-description a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-size: var(--font-sm);
+            font-weight: 500;
+            color: var(--theme-text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--ios-gray-lighter);
+            border-radius: var(--radius-md);
+            font-size: var(--font-base);
+            transition: all 0.2s ease;
+            background: white;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--theme-info);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }   box-shadow: 0 0 0 3px var(--theme-focus-ring);
+        }
+
+        .cloud-status-display {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: 12px 16px;
+            background: var(--ios-gray-bg);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--ios-gray);
+            flex-shrink: 0;
+        }
+
+        .status-dot.connected {
+            background: var(--ios-green);
+        }
+
+        .status-text {
+            font-size: var(--font-base);
+            font-weight: 500;
+            color: var(--theme-primary);
+        }
+
+        .status-time {
+            margin-left: auto;
+            font-size: var(--font-sm);
+            color: var(--ios-gray);
+        }
+
+        .sync-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 980px;
+            font-size: var(--font-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-primary {
+            background: var(--theme-btn-primary-bg);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--theme-btn-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--theme-text-primary);
+            border: 1.5px solid var(--theme-border-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--theme-hover-bg);
+            border-color: var(--theme-info);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.15);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal - Apple Style */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            z-index: 10000;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(40px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: var(--font-2xl);
+            font-weight: 600;
+            color: var(--theme-text-primary);
+            margin: 0;
+        }
+
+        .modal-hint {
+            font-size: var(--font-base);
+            color: var(--theme-text-secondary);
+            margin: 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 980px;
+            font-size: var(--font-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn.primary {
+            background: var(--theme-btn-primary-bg);
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: var(--theme-btn-primary-hover);
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        .modal-btn.secondary {
+            background: var(--theme-hover-bg);
+            color: var(--theme-text-primary);
+        }
+
+        .modal-btn.secondary:hover {
+            background: var(--theme-border-primary);
+        }
+
+        /* Module List */
+        .module-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .module-item {
+            background: var(--theme-bg-secondary);
+            border: 1px solid var(--theme-border-primary);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .module-item:hover {
+            border-color: var(--theme-info);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
+        }
+
+        .module-header {
+            font-weight: 600;
+            color: var(--theme-text-primary);
+            margin-bottom: 12px;
+            font-size: var(--font-base);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .module-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--theme-text-primary);
+        }
+
+        .module-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Radio Option 样式优化 */
+        .radio-option {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 2px solid var(--theme-border-primary);
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .radio-option:hover:not(.disabled) {
+            border-color: var(--theme-info);
+            background: rgba(0, 122, 255, 0.02);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.08);
+        }
+
+        .radio-option.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: var(--theme-bg-secondary);
+        }
+
+        /* 单选框样式 */
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin: 2px 0 0 0;
+            flex-shrink: 0;
+            cursor: pointer;
+            accent-color: var(--theme-info);
+        }
+
+        .radio-option.disabled input[type="radio"] {
+            cursor: not-allowed;
+        }
+
+        /* 选中状态 */
+        .radio-option:has(input:checked) {
+            border-color: var(--theme-info);
+            background: rgba(0, 122, 255, 0.05);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        /* 文字容器 */
+        .radio-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 主文字 - Use Local / Use Cloud */
+        .radio-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--theme-text-primary);
+            line-height: 1.4;
+        }
+
+        /* 详细信息 - 2 wheels / Not exists */
+        .radio-detail {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--theme-text-secondary);
+            line-height: 1.4;
+        }
+
+        .radio-option:has(input:checked) .radio-text {
+            color: var(--theme-info);
+            font-weight: 600;
+        }
+
+        .radio-option:has(input:checked) .radio-detail {
+            color: var(--theme-info);
+            opacity: 0.8;
+        }
+
+        .radio-option.disabled .radio-text,
+        .radio-option.disabled .radio-detail {
+            color: var(--theme-text-tertiary);
+        }
+
+        /* Import Modal Specific */
+        #importJsonInput {
+            width: 100%;
+            height: 280px;
+            padding: 14px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            border: 1.5px solid var(--theme-border-primary);
+            border-radius: 12px;
+            background: var(--theme-bg-secondary);
+            color: var(--theme-text-primary);
+            resize: vertical;
+            min-height: 200px;
+            max-height: 400px;
+            transition: all 0.2s ease;
+        }
+
+        #importJsonInput:focus {
+            outline: none;
+            border-color: var(--theme-info);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+            background: white;
+        }
+
+        #importJsonInput::placeholder {
+            color: var(--theme-text-tertiary);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(28, 28, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: var(--font-sm);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: var(--spacing-lg);
+                padding-top: calc(var(--nav-height) + var(--spacing-lg));
+            }
+
+            .settings-card {
+                padding: var(--spacing-lg);
+            }
+
+            .sync-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- 导航栏样式必须最后加载，确保优先级最高 -->
+    <link rel="stylesheet" href="../shared/styles/components/navigation.css">
+    <script src="../shared/scripts/navigation-loader.js" defer></script>
+</head>
+<body data-page="settings">
+    <!-- 导航栏将由 navigation-loader.js 自动加载 -->
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Configuration</h1>
+            <p>Manage cloud sync and local backup for all tools</p>
+        </div>
+
+        <div class="settings-card">
+            <!-- Cloud Configuration -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <h2 class="section-title">Cloud Config</h2>
+                    <svg class="help-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1"/>
+                        <path d="M9 8V12M9 5.5V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                
+                <p class="section-description">
+                    Sync configuration to cloud storage - 
+                    <a href="https://jsonbin.io" target="_blank" rel="noopener">Create a free account</a> to get started.
+                </p>
+
+                <div class="form-group">
+                    <label for="cloudBinId" class="form-label">JSONBin ID</label>
+                    <input 
+                        type="text" 
+                        id="cloudBinId" 
+                        class="form-input" 
+                        placeholder="Enter your Bin ID (e.g., 675d4c3f...)"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="cloudMasterKey" class="form-label">X-Master-Key</label>
+                    <input 
+                        type="password" 
+                        id="cloudMasterKey" 
+                        class="form-input" 
+                        placeholder="Enter your Master Key (e.g., $2a$10...)"
+                    />
+                </div>
+
+                <div class="cloud-status-display">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span class="status-text" id="statusText">Local Only</span>
+                    <span class="status-time" id="statusTime"></span>
+                </div>
+
+                <button id="syncBtn" class="btn btn-primary" style="width: 100%; margin-top: 16px;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13 7C13 4.23858 10.7614 2 8 2C5.58862 2 3.55892 3.71776 3.11622 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M3 9C3 11.7614 5.23858 14 8 14C10.4114 14 12.4411 12.2822 12.8838 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M3 6L3 9L6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13 10L13 7L10 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Sync
+                </button>
+            </div>
+
+            <!-- Local Configuration -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <h2 class="section-title">Local Config</h2>
+                </div>
+                
+                <p class="section-description">
+                    Import/Export configuration files (offline backup)
+                </p>
+
+                <div class="sync-buttons">
+                    <button id="exportBtn" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 11V3M8 11L5 8M8 11L11 8M2 13H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Export Config
+                    </button>
+                    <button id="importBtn" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M5 2H11V4H5V2ZM3 4V14H13V4H11M5 4H3M11 4H13M7 7H9M7 10H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Import Config
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Module Sync Selection Dialog -->
+    <div id="moduleSyncDialog" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div style="margin-bottom: 24px;">
+                <h2 class="modal-title" style="margin-bottom: 8px;">Cloud Sync</h2>
+                <p class="modal-hint">Select which version to use for each module</p>
+            </div>
+            
+            <div id="moduleList" class="module-list" style="margin-bottom: 24px;"></div>
+            
+            <div class="modal-actions">
+                <button id="cancelModuleSyncBtn" class="modal-btn secondary">Cancel</button>
+                <button id="confirmModuleSyncBtn" class="modal-btn primary">Confirm Sync</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Config Modal -->
+    <div id="importModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 700px;">
+            <div style="margin-bottom: 20px;">
+                <h2 class="modal-title" style="margin-bottom: 8px;">Import Configuration</h2>
+                <p class="modal-hint">Paste your configuration JSON below</p>
+            </div>
+            
+            <textarea 
+                id="importJsonInput" 
+                placeholder='{"pickerWheel": {...}, "cloudConfig": {...}}'
+            ></textarea>
+            
+            <div class="modal-actions" style="margin-top: 20px;">
+                <button id="cancelImportBtn" class="modal-btn secondary">Cancel</button>
+                <button id="confirmImportBtn" class="modal-btn primary">Import</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="../shared/scripts/cloudManager.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

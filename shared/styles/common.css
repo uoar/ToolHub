@@ -1,0 +1,724 @@
+/* iOS Design System - Shared Styles */
+
+:root {
+    /* ============================================
+       🎨 THEME COLOR SYSTEM - 统一主题颜色变量
+       修改这里的颜色即可全局切换整个网站风格
+       ============================================ */
+    
+    /* 主题色 - Primary Theme Colors */
+    --theme-primary: #1d1d1f;              /* 主色调：Apple黑 */
+    --theme-primary-hover: #424245;        /* 主色调悬浮态 */
+    --theme-primary-active: #000000;       /* 主色调激活态 */
+    
+    /* 文本颜色 - Text Colors */
+    --theme-text-primary: #1C1C1E;         /* 主要文本 */
+    --theme-text-secondary: #86868b;       /* 次要文本 */
+    --theme-text-tertiary: #8E8E93;        /* 三级文本 */
+    --theme-text-quaternary: #C7C7CC;      /* 四级文本（最淡） */
+    --theme-text-inverse: #ffffff;         /* 反色文本（深色背景上用） */
+    
+    /* 背景颜色 - Background Colors */
+    --theme-bg-primary: #fbfbfd;           /* 主背景 */
+    --theme-bg-secondary: #F5F5F7;         /* 次背景 */
+    --theme-bg-tertiary: #F2F2F7;          /* 三级背景 */
+    --theme-bg-overlay: rgba(255, 255, 255, 0.8);  /* 毛玻璃背景 */
+    --theme-bg-card: rgba(255, 255, 255, 0.8);     /* 卡片背景 */
+    
+    /* 边框颜色 - Border Colors */
+    --theme-border-primary: rgba(0, 0, 0, 0.06);   /* 主边框 */
+    --theme-border-secondary: rgba(0, 0, 0, 0.08); /* 次边框 */
+    --theme-border-light: #d2d2d7;                  /* 浅色边框 */
+    --theme-border-lighter: #e8e8ed;                /* 更浅边框 */
+    
+    /* 交互状态 - Interactive States */
+    --theme-hover-bg: rgba(0, 0, 0, 0.04); /* 悬浮背景 */
+    --theme-active-bg: rgba(0, 0, 0, 0.08);/* 激活背景 */
+    --theme-focus-ring: rgba(29, 29, 31, 0.3); /* 聚焦环 */
+    
+    /* 语义化颜色 - Semantic Colors */
+    --theme-success: #30D158;              /* 成功/绿色 */
+    --theme-danger: #FF3B30;               /* 危险/红色 */
+    --theme-warning: #FF9500;              /* 警告/橙色 */
+    --theme-info: #007AFF;                 /* 信息/蓝色 */
+    
+    /* 按钮颜色 - Button Colors */
+    --theme-btn-primary-bg: #007AFF;       /* 主按钮背景（iOS蓝） */
+    --theme-btn-primary-hover: #0051D5;    /* 主按钮悬浮 */
+    --theme-btn-primary-text: #ffffff;     /* 主按钮文字 */
+    --theme-btn-secondary-bg: #F5F5F7;     /* 次按钮背景 */
+    --theme-btn-secondary-hover: #e8e8ed;  /* 次按钮悬浮 */
+    --theme-btn-secondary-text: #1d1d1f;   /* 次按钮文字 */
+    
+    /* 渐变 - Gradients */
+    --theme-gradient-primary: linear-gradient(135deg, #1d1d1f 0%, #86868b 100%);
+    --theme-gradient-bg: linear-gradient(to bottom, #f5f5f7, #fbfbfd);
+    
+    /* 阴影 - Shadows */
+    --theme-shadow-primary: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --theme-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --theme-shadow-button: 0 2px 8px rgba(0, 0, 0, 0.15);
+    
+    /* ============================================
+       📐 DESIGN TOKENS - 设计规范（非颜色）
+       ============================================ */
+    
+    /* Typography Scale */
+    --font-xs: 11px;
+    --font-sm: 12px;
+    --font-base: 14px;
+    --font-md: 16px;
+    --font-lg: 17px;
+    --font-xl: 20px;
+    --font-2xl: 24px;
+    --font-3xl: 28px;
+    --font-4xl: 34px;
+    
+    /* Navigation Specific */
+    --nav-height: 44px;
+    --nav-logo-size: 17px;
+    --nav-item-size: 12px;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-3xl: 24px;
+    
+    /* Shadows (legacy - 使用上面的 theme-shadow-* 代替) */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    
+    /* Transitions */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Typography */
+    --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* iOS-style Frosted Glass Effect */
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.frosted-glass-dark {
+    background: var(--ios-dark-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* iOS-style Buttons */
+.ios-button {
+    background: var(--ios-blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-system);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.ios-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    filter: brightness(1.05);
+}
+
+.ios-button:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+.ios-button-secondary {
+    background: var(--ios-gray-lighter);
+    color: var(--ios-blue);
+}
+
+.ios-button-danger {
+    background: var(--theme-btn-secondary-bg);
+    color: var(--theme-text-secondary);
+}
+
+/* iOS-style Cards */
+.ios-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.ios-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* iOS-style Inputs */
+.ios-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--ios-gray-lighter);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: var(--font-system);
+    transition: all var(--transition-base);
+    background: white;
+}
+
+.ios-input:focus {
+    outline: none;
+    border-color: var(--ios-blue);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* iOS-style Navigation Bar */
+.ios-navbar {
+    position: sticky;
+    top: 0;
+    background: var(--ios-gray-bg);
+    padding: var(--spacing-md) var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ios-gray-lighter);
+    z-index: 100;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.ios-navbar-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #000;
+    letter-spacing: -0.3px;
+}
+
+.ios-navbar-back {
+    color: var(--ios-blue);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: opacity var(--transition-fast);
+}
+
+.ios-navbar-back:hover {
+    opacity: 0.7;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+/* 旧的导航栏样式已移除 - 现在统一使用 components/navigation.css */
+/* 如需导航栏样式，请在页面中引入 shared/styles/components/navigation.css */
+
+/* Modal Base Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 1200px;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 10000;
+}
+
+/* macOS-style floating scrollbar - hidden by default, shows on hover/scroll */
+.modal-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 16px 0;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    background-clip: padding-box;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+/* Firefox Scrollbar */
+.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+/* Module List Scrollbar - floating style */
+.module-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.module-list::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+}
+
+.module-list::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.3s ease;
+}
+
+.module-list:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.12);
+    background-clip: padding-box;
+}
+
+.module-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.module-list {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+}
+
+/* Textarea Scrollbar - floating style */
+textarea::-webkit-scrollbar {
+    width: 10px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 0 8px 8px 0;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.3s ease;
+}
+
+textarea:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    background-clip: padding-box;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+textarea {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--theme-primary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--ios-gray);
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: var(--ios-gray-lighter);
+    color: var(--theme-primary);
+}
+
+/* Modal Actions */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 980px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-system);
+}
+
+.modal-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.modal-btn.primary {
+    background: var(--theme-primary);
+    color: white;
+}
+
+.modal-btn.primary:hover:not(:disabled) {
+    background: var(--theme-primary-hover);
+    transform: scale(1.02);
+    box-shadow: var(--theme-shadow-button);
+}
+
+.modal-btn.secondary {
+    background: var(--theme-btn-secondary-bg);
+    color: var(--theme-primary);
+}
+
+.modal-btn.secondary:hover:not(:disabled) {
+    background: var(--theme-btn-secondary-hover);
+}
+
+.modal-btn.danger {
+    background: var(--theme-btn-secondary-bg);
+    color: var(--theme-text-secondary);
+}
+
+.modal-btn.danger:hover:not(:disabled) {
+    background: var(--theme-btn-secondary-hover);
+    transform: scale(1.02);
+}
+
+.modal-title {
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--theme-text-primary);
+    margin: 0;
+}
+
+.modal-hint {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Settings Modal */
+.settings-modal {
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.settings-section {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ios-gray-lighter);
+}
+
+.settings-section:last-of-type {
+    border-bottom: none;
+}
+
+.settings-section .section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: var(--font-md);
+    font-weight: 600;
+    color: var(--theme-primary);
+    position: relative;
+}
+
+.settings-section .help-icon {
+    cursor: help;
+    color: var(--ios-gray);
+}
+
+.settings-section .help-icon:hover {
+    color: var(--theme-info);
+}
+
+.settings-section .form-group {
+    margin-bottom: 16px;
+}
+
+.settings-section .form-label {
+    display: block;
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--theme-primary);
+    margin-bottom: 6px;
+}
+
+.settings-section .form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--ios-gray-lighter);
+    border-radius: var(--radius-md);
+    font-size: var(--font-base);
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.settings-section .form-input:focus {
+    outline: none;
+    border-color: var(--ios-blue);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Cloud Status Display */
+.cloud-status-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--ios-gray-bg);
+    border-radius: var(--radius-md);
+    font-size: var(--font-sm);
+    margin-top: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ios-gray);
+    flex-shrink: 0;
+}
+
+.status-dot.connected {
+    background: var(--ios-green);
+}
+
+.status-text {
+    font-weight: 500;
+    color: var(--theme-primary);
+}
+
+.status-time {
+    color: var(--ios-gray);
+    margin-left: auto;
+    font-size: var(--font-xs);
+}
+
+/* Sync Buttons */
+.sync-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+/* Module Sync Dialog Styles */
+.module-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.module-item {
+    background: var(--theme-bg-card);
+    border: 1px solid var(--theme-border-primary);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+
+.module-item:hover {
+    border-color: var(--ios-blue);
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
+}
+
+.module-header {
+    margin-bottom: 12px;
+}
+
+.module-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--theme-text-primary);
+}
+
+.module-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1.5px solid var(--theme-border-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--theme-bg-secondary);
+}
+
+.radio-option:hover:not(.disabled) {
+    border-color: var(--theme-info);
+    background: var(--theme-hover-bg);
+}
+
+.radio-option.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: var(--ios-gray-bg);
+}
+
+.radio-option input[type="radio"] {
+    margin: 0;
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--theme-info);
+}
+
+.radio-option input[type="radio"]:disabled {
+    cursor: not-allowed;
+}
+
+.radio-option input[type="radio"]:checked + .radio-label {
+    color: var(--theme-info);
+    font-weight: 500;
+}
+
+.radio-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.radio-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--theme-text-primary);
+}
+
+.radio-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.radio-option:has(input:checked) {
+    border-color: var(--theme-info);
+    background: var(--theme-active-bg);
+}
+
+.radio-option:has(input:checked) .radio-text {
+    color: var(--theme-info);
+}
+
+@media (max-width: 768px) {
+    .nav-list {
+        gap: 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    .nav-list::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .nav-item {
+        font-size: var(--font-sm);
+    }
+}
+
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }

@@ -1,0 +1,296 @@
+/**
+ * ============================================
+ * 🎨 DESIGN TOKENS & CSS VARIABLES
+ * ============================================
+ * 设计令牌 - 所有样式的单一真实来源
+ * 修改此文件即可全局调整整个应用的视觉风格
+ * 
+ * 架构层级: Layer 1 - Variables (ITCSS)
+ * 用途: 定义所有可复用的设计原子单位
+ * ============================================
+ */
+
+:root {
+    /* ============================================
+       COLOR PALETTE - 色彩系统
+       ============================================ */
+    
+    /* === 主题色 - Primary Theme === */
+    --color-primary-base: #1d1d1f;              /* Apple 黑 */
+    --color-primary-hover: #424245;             /* 主色悬浮态 */
+    --color-primary-active: #000000;            /* 主色激活态 */
+    
+    /* === 文本颜色 - Text Colors === */
+    --color-text-primary: #1C1C1E;              /* 主要文本 */
+    --color-text-secondary: #86868b;            /* 次要文本 */
+    --color-text-tertiary: #8E8E93;             /* 三级文本 */
+    --color-text-quaternary: #C7C7CC;           /* 四级文本 */
+    --color-text-inverse: #ffffff;              /* 反色文本（深色背景） */
+    
+    /* === 背景颜色 - Background Colors === */
+    --color-bg-primary: #fbfbfd;                /* 主背景 */
+    --color-bg-secondary: #F5F5F7;              /* 次背景 */
+    --color-bg-tertiary: #F2F2F7;               /* 三级背景 */
+    --color-bg-overlay: rgba(255, 255, 255, 0.8);   /* 毛玻璃背景 */
+    --color-bg-card: rgba(255, 255, 255, 0.8);      /* 卡片背景 */
+    
+    /* === 边框颜色 - Border Colors === */
+    --color-border-primary: rgba(0, 0, 0, 0.06);    /* 主边框 */
+    --color-border-secondary: rgba(0, 0, 0, 0.08);  /* 次边框 */
+    --color-border-light: #d2d2d7;                  /* 浅色边框 */
+    --color-border-lighter: #e8e8ed;                /* 更浅边框 */
+    
+    /* === 交互状态颜色 - Interactive States === */
+    --color-hover-bg: rgba(0, 0, 0, 0.04);      /* 悬浮背景 */
+    --color-active-bg: rgba(0, 0, 0, 0.08);     /* 激活背景 */
+    --color-focus-ring: rgba(0, 122, 255, 0.3); /* 聚焦环（蓝色） */
+    
+    /* === 语义化颜色 - Semantic Colors === */
+    --color-success: #30D158;                   /* 成功/绿色 */
+    --color-danger: #FF3B30;                    /* 危险/红色 */
+    --color-warning: #FF9500;                   /* 警告/橙色 */
+    --color-info: #007AFF;                      /* 信息/iOS 蓝 */
+    
+    /* === 按钮专用色 - Button Colors === */
+    --color-btn-primary-bg: #007AFF;            /* 主按钮背景（蓝色） */
+    --color-btn-primary-hover: #0051D5;         /* 主按钮悬浮 */
+    --color-btn-primary-text: #ffffff;          /* 主按钮文字 */
+    --color-btn-secondary-bg: #F5F5F7;          /* 次按钮背景 */
+    --color-btn-secondary-hover: #e8e8ed;       /* 次按钮悬浮 */
+    --color-btn-secondary-text: #1d1d1f;        /* 次按钮文字 */
+    
+    /* ============================================
+       SEMANTIC TOKENS - 语义化令牌
+       基于上面的颜色定义，映射到具体用途
+       ============================================ */
+    
+    --theme-primary: var(--color-primary-base);
+    --theme-primary-hover: var(--color-primary-hover);
+    --theme-primary-active: var(--color-primary-active);
+    
+    --theme-text-primary: var(--color-text-primary);
+    --theme-text-secondary: var(--color-text-secondary);
+    --theme-text-tertiary: var(--color-text-tertiary);
+    --theme-text-quaternary: var(--color-text-quaternary);
+    --theme-text-inverse: var(--color-text-inverse);
+    
+    --theme-bg-primary: var(--color-bg-primary);
+    --theme-bg-secondary: var(--color-bg-secondary);
+    --theme-bg-tertiary: var(--color-bg-tertiary);
+    --theme-bg-overlay: var(--color-bg-overlay);
+    --theme-bg-card: var(--color-bg-card);
+    
+    --theme-border-primary: var(--color-border-primary);
+    --theme-border-secondary: var(--color-border-secondary);
+    --theme-border-light: var(--color-border-light);
+    --theme-border-lighter: var(--color-border-lighter);
+    
+    --theme-hover-bg: var(--color-hover-bg);
+    --theme-active-bg: var(--color-active-bg);
+    --theme-focus-ring: var(--color-focus-ring);
+    
+    --theme-success: var(--color-success);
+    --theme-danger: var(--color-danger);
+    --theme-warning: var(--color-warning);
+    --theme-info: var(--color-info);
+    
+    --theme-btn-primary-bg: var(--color-btn-primary-bg);
+    --theme-btn-primary-hover: var(--color-btn-primary-hover);
+    --theme-btn-primary-text: var(--color-btn-primary-text);
+    --theme-btn-secondary-bg: var(--color-btn-secondary-bg);
+    --theme-btn-secondary-hover: var(--color-btn-secondary-hover);
+    --theme-btn-secondary-text: var(--color-btn-secondary-text);
+    
+    /* ============================================
+       GRADIENTS - 渐变
+       ============================================ */
+    
+    --gradient-primary: linear-gradient(135deg, var(--color-primary-base) 0%, var(--color-text-secondary) 100%);
+    --gradient-bg: linear-gradient(to bottom, var(--color-bg-secondary), var(--color-bg-primary));
+    --gradient-blue: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    
+    --theme-gradient-primary: var(--gradient-primary);
+    --theme-gradient-bg: var(--gradient-bg);
+    
+    /* ============================================
+       SHADOWS - 阴影系统
+       ============================================ */
+    
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+    
+    /* iOS-specific shadows */
+    --shadow-button: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-modal: 0 20px 48px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+    
+    /* Semantic mapping */
+    --theme-shadow-primary: var(--shadow-card);
+    --theme-shadow-hover: var(--shadow-card-hover);
+    --theme-shadow-button: var(--shadow-button);
+    
+    /* ============================================
+       TYPOGRAPHY - 字体系统
+       ============================================ */
+    
+    /* Font Families */
+    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+    --font-system: var(--font-family-base);
+    
+    /* Font Sizes - iOS Scale */
+    --font-xs: 11px;        /* Footnote */
+    --font-sm: 12px;        /* Caption */
+    --font-base: 14px;      /* Subheadline */
+    --font-md: 16px;        /* Callout */
+    --font-lg: 17px;        /* Body (iOS default) */
+    --font-xl: 20px;        /* Title 3 */
+    --font-2xl: 24px;       /* Title 2 */
+    --font-3xl: 28px;       /* Title 1 */
+    --font-4xl: 34px;       /* Large Title */
+    --font-5xl: 40px;
+    --font-6xl: 48px;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.6;
+    --line-height-loose: 2;
+    
+    /* ============================================
+       SPACING SCALE - 间距系统
+       8px 基准网格系统
+       ============================================ */
+    
+    --spacing-0: 0;
+    --spacing-1: 4px;       /* 0.5 * base */
+    --spacing-2: 8px;       /* 1 * base */
+    --spacing-3: 12px;      /* 1.5 * base */
+    --spacing-4: 16px;      /* 2 * base */
+    --spacing-5: 20px;      /* 2.5 * base */
+    --spacing-6: 24px;      /* 3 * base */
+    --spacing-8: 32px;      /* 4 * base */
+    --spacing-10: 40px;     /* 5 * base */
+    --spacing-12: 48px;     /* 6 * base */
+    --spacing-16: 64px;     /* 8 * base */
+    --spacing-20: 80px;     /* 10 * base */
+    --spacing-24: 96px;     /* 12 * base */
+    
+    /* Legacy aliases */
+    --spacing-xs: var(--spacing-1);
+    --spacing-sm: var(--spacing-2);
+    --spacing-md: var(--spacing-3);
+    --spacing-lg: var(--spacing-4);
+    --spacing-xl: var(--spacing-5);
+    --spacing-2xl: var(--spacing-6);
+    
+    /* ============================================
+       BORDER RADIUS - 圆角系统
+       ============================================ */
+    
+    --radius-none: 0;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-3xl: 24px;
+    --radius-full: 9999px;  /* 完全圆形 */
+    
+    /* ============================================
+       Z-INDEX SCALE - 层级系统
+       统一管理 z-index，避免冲突
+       ============================================ */
+    
+    --z-base: 0;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal-backdrop: 400;
+    --z-modal: 500;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-notification: 800;
+    --z-max: 9999;
+    
+    /* ============================================
+       TRANSITIONS - 动画过渡
+       ============================================ */
+    
+    /* Durations */
+    --duration-instant: 0.1s;
+    --duration-fast: 0.15s;
+    --duration-base: 0.2s;
+    --duration-slow: 0.3s;
+    --duration-slower: 0.4s;
+    
+    /* Easing Functions */
+    --ease-linear: linear;
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-apple: cubic-bezier(0.25, 0.46, 0.45, 0.94);  /* Apple 官方曲线 */
+    
+    /* Complete Transitions */
+    --transition-fast: var(--duration-fast) var(--ease-in-out);
+    --transition-base: var(--duration-base) var(--ease-in-out);
+    --transition-slow: var(--duration-slow) var(--ease-in-out);
+    --transition-smooth: var(--duration-slow) var(--ease-apple);
+    
+    /* ============================================
+       COMPONENT-SPECIFIC TOKENS
+       组件专用令牌（避免magic numbers）
+       ============================================ */
+    
+    /* Navigation */
+    --nav-height: 48px;
+    --nav-logo-size: 17px;
+    --nav-item-size: 14px;
+    
+    /* Forms */
+    --input-height: 44px;           /* iOS 推荐点击区域最小 44px */
+    --input-padding-x: 16px;
+    --input-padding-y: 12px;
+    --input-border-width: 1px;
+    
+    /* Buttons */
+    --btn-height-sm: 32px;
+    --btn-height-md: 44px;
+    --btn-height-lg: 56px;
+    --btn-padding-x-sm: 12px;
+    --btn-padding-x-md: 20px;
+    --btn-padding-x-lg: 32px;
+    
+    /* Cards */
+    --card-padding: 20px;
+    --card-radius: var(--radius-lg);
+    
+    /* Modals */
+    --modal-width-sm: 400px;
+    --modal-width-md: 600px;
+    --modal-width-lg: 800px;
+    --modal-padding: 24px;
+    
+    /* ============================================
+       BREAKPOINTS - 响应式断点
+       ============================================ */
+    
+    --breakpoint-xs: 375px;     /* iPhone SE */
+    --breakpoint-sm: 640px;     /* Mobile landscape */
+    --breakpoint-md: 768px;     /* Tablet */
+    --breakpoint-lg: 1024px;    /* Desktop */
+    --breakpoint-xl: 1280px;    /* Large desktop */
+    --breakpoint-2xl: 1536px;   /* XL desktop */
+}

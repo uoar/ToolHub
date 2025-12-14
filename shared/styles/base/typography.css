@@ -1,0 +1,365 @@
+/**
+ * ============================================
+ * 📝 TYPOGRAPHY SYSTEM
+ * ============================================
+ * 架构层级: Layer 3 - Base (ITCSS)
+ * 用途: 定义全局字体样式和排版规则
+ * 设计参考: Apple Human Interface Guidelines
+ * ============================================
+ */
+
+/* ============================================
+   Body & Default Typography
+   ============================================ */
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-lg);              /* iOS 默认 17px */
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-relaxed);
+    color: var(--theme-text-primary);
+    letter-spacing: -0.022em;               /* Apple 字间距 */
+}
+
+/* ============================================
+   Headings - iOS Typography Scale
+   ============================================ */
+
+/* Large Title - 34px */
+h1,
+.text-h1 {
+    font-size: var(--font-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.026em;
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-4);
+}
+
+/* Title 1 - 28px */
+h2,
+.text-h2 {
+    font-size: var(--font-3xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.024em;
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-3);
+}
+
+/* Title 2 - 24px */
+h3,
+.text-h3 {
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.022em;
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-3);
+}
+
+/* Title 3 - 20px */
+h4,
+.text-h4 {
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.020em;
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+/* Headline - 17px */
+h5,
+.text-h5 {
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.022em;
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+/* Subheadline - 15px */
+h6,
+.text-h6 {
+    font-size: var(--font-md);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.016em;
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+/* ============================================
+   Paragraph & Body Text
+   ============================================ */
+
+/* Body - 17px (iOS default) */
+p,
+.text-body {
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-relaxed);
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-4);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* Callout - 16px */
+.text-callout {
+    font-size: var(--font-md);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.020em;
+}
+
+/* Subheadline - 15px (不要和 h6 混淆) */
+.text-subheadline {
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.016em;
+}
+
+/* Footnote - 13px */
+.text-footnote {
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.008em;
+    color: var(--theme-text-secondary);
+}
+
+/* Caption 1 - 12px */
+.text-caption,
+.text-caption-1 {
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    letter-spacing: 0;
+    color: var(--theme-text-secondary);
+}
+
+/* Caption 2 - 11px */
+.text-caption-2 {
+    font-size: var(--font-xs);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    letter-spacing: 0.06em;
+    color: var(--theme-text-tertiary);
+}
+
+/* ============================================
+   Text Sizes - Utility Classes
+   ============================================ */
+.text-xs { font-size: var(--font-xs); }
+.text-sm { font-size: var(--font-sm); }
+.text-base { font-size: var(--font-base); }
+.text-md { font-size: var(--font-md); }
+.text-lg { font-size: var(--font-lg); }
+.text-xl { font-size: var(--font-xl); }
+.text-2xl { font-size: var(--font-2xl); }
+.text-3xl { font-size: var(--font-3xl); }
+.text-4xl { font-size: var(--font-4xl); }
+
+/* ============================================
+   Font Weights
+   ============================================ */
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* ============================================
+   Text Colors - Semantic Classes
+   ============================================ */
+.text-primary { color: var(--theme-text-primary); }
+.text-secondary { color: var(--theme-text-secondary); }
+.text-tertiary { color: var(--theme-text-tertiary); }
+.text-quaternary { color: var(--theme-text-quaternary); }
+.text-inverse { color: var(--theme-text-inverse); }
+
+/* Semantic colors */
+.text-success { color: var(--theme-success); }
+.text-danger { color: var(--theme-danger); }
+.text-warning { color: var(--theme-warning); }
+.text-info { color: var(--theme-info); }
+
+/* ============================================
+   Text Alignment
+   ============================================ */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* ============================================
+   Text Transform
+   ============================================ */
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+.text-normal-case { text-transform: none; }
+
+/* ============================================
+   Text Decoration
+   ============================================ */
+.text-underline { text-decoration: underline; }
+.text-line-through { text-decoration: line-through; }
+.text-no-underline { text-decoration: none; }
+
+/* ============================================
+   Line Height
+   ============================================ */
+.leading-none { line-height: 1; }
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+.leading-loose { line-height: var(--line-height-loose); }
+
+/* ============================================
+   Text Overflow
+   ============================================ */
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a {
+    color: var(--theme-info);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--theme-btn-primary-hover);
+    text-decoration: underline;
+}
+
+a:active {
+    opacity: 0.8;
+}
+
+/* Link variants */
+.link-primary {
+    color: var(--theme-info);
+}
+
+.link-secondary {
+    color: var(--theme-text-secondary);
+}
+
+.link-danger {
+    color: var(--theme-danger);
+}
+
+/* ============================================
+   Code & Monospace
+   ============================================ */
+code,
+kbd,
+samp,
+pre {
+    font-family: var(--font-family-mono);
+}
+
+code {
+    padding: 2px 6px;
+    background: var(--theme-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+    color: var(--theme-info);
+}
+
+pre {
+    padding: var(--spacing-4);
+    background: var(--theme-bg-tertiary);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    line-height: var(--line-height-relaxed);
+}
+
+pre code {
+    padding: 0;
+    background: none;
+    color: inherit;
+}
+
+kbd {
+    padding: 2px 6px;
+    background: var(--theme-primary);
+    color: var(--theme-text-inverse);
+    border-radius: var(--radius-sm);
+    font-size: 0.85em;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   Quotes
+   ============================================ */
+blockquote {
+    padding-left: var(--spacing-4);
+    border-left: 4px solid var(--theme-info);
+    color: var(--theme-text-secondary);
+    font-style: italic;
+    margin: var(--spacing-4) 0;
+}
+
+blockquote p {
+    margin-bottom: var(--spacing-2);
+}
+
+/* ============================================
+   Lists
+   ============================================ */
+ul,
+ol {
+    padding-left: var(--spacing-5);
+    margin-bottom: var(--spacing-4);
+}
+
+li {
+    margin-bottom: var(--spacing-1);
+}
+
+/* ============================================
+   Selection
+   ============================================ */
+::selection {
+    background: var(--theme-info);
+    color: white;
+}
+
+::-moz-selection {
+    background: var(--theme-info);
+    color: white;
+}

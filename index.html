@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE Tools - Tools, Made Simple</title>
+    <link rel="stylesheet" href="shared/styles/main.css">
+    <style>
+        /* 页面样式必须在 navigation.css 之前，避免覆盖导航栏 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            min-height: calc(100vh - var(--nav-height));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--theme-primary);
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--theme-info), var(--theme-btn-primary-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--theme-text-secondary);
+            margin-bottom: 80px;
+            letter-spacing: -0.5px;
+            animation: fadeIn 1s ease-out 0.4s both;
+        }
+
+        .hero-subtitle .highlight {
+            color: var(--theme-info);
+            font-weight: 600;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 1s ease-out both;
+        }
+
+        .feature-card:nth-child(1) {
+            animation-delay: 0.6s;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 122, 255, 0.15), 0 4px 24px rgba(0, 0, 0, 0.08);
+            border-color: var(--theme-info);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--theme-info) 0%, var(--theme-btn-primary-hover) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--theme-primary);
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .feature-card:hover .feature-title {
+            color: var(--theme-info);
+        }
+
+        .feature-description {
+            font-size: 15px;
+            color: var(--theme-text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            margin-top: 80px;
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 40px;
+            background: var(--theme-btn-primary-bg);
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 980px;
+            border: 2px solid var(--theme-btn-primary-bg);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.4), 0 4px 12px rgba(0, 122, 255, 0.2);
+            background: white;
+            color: var(--theme-btn-primary-bg);
+            border: 2px solid var(--theme-btn-primary-bg);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+                margin-bottom: 60px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .feature-card {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+    <!-- 导航栏样式必须最后加载，确保优先级最高 -->
+    <link rel="stylesheet" href="shared/styles/components/navigation.css">
+    <script src="shared/scripts/navigation-loader.js" defer></script>
+</head>
+<body data-page="home">
+    <!-- 导航栏将由 navigation-loader.js 自动加载 -->
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Tools, Made <span class="highlight">Simple</span></h1>
+        <p class="hero-subtitle">Focus on <span class="highlight">experience</span>, Pursue perfection</p>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Ad-Free</h3>
+                <p class="feature-description">Pure tool experience. No ads, no tracking. Your focus belongs to your work</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 10V3L4 14H11L11 21L20 10L13 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Lightning Fast</h3>
+                <p class="feature-description">Carefully optimized performance. Every click feels smooth as silk</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 15V21M15.88 12.88L20.17 17.17M16.24 9L21.05 6.05M12 9V3M7.76 9L2.95 6.05M8.12 12.88L3.83 17.17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Privacy First</h3>
+                <p class="feature-description">Local first, cloud optional. Your data stays in your control</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <a href="picker-wheel/index.html" class="cta-button">
+                Get Started
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+</body>
+</html>

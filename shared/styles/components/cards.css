@@ -1,0 +1,158 @@
+/**
+ * ============================================
+ * 🃏 CARD COMPONENT
+ * ============================================
+ * 架构层级: Layer 6 - Components (ITCSS)
+ * 用途: 卡片容器组件
+ * 设计参考: iOS Card Design
+ * ============================================
+ */
+
+/* ============================================
+   Base Card
+   ============================================ */
+.card {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* ============================================
+   Card Variants
+   ============================================ */
+
+/* Elevated card */
+.card--elevated {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Flat card */
+.card--flat {
+    box-shadow: none;
+    border: 1px solid var(--theme-border-primary);
+}
+
+/* Frosted glass card */
+.card--frosted {
+    background: var(--theme-bg-card);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   Card Sizes
+   ============================================ */
+.card--sm {
+    padding: var(--spacing-3);
+}
+
+.card--md {
+    padding: var(--spacing-5);
+}
+
+.card--lg {
+    padding: var(--spacing-6);
+}
+
+/* ============================================
+   Card Components
+   ============================================ */
+
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 1px solid var(--theme-border-primary);
+}
+
+.card-title {
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    margin: 0;
+}
+
+.card-subtitle {
+    font-size: var(--font-sm);
+    color: var(--theme-text-secondary);
+    margin-top: var(--spacing-1);
+}
+
+/* Card Body */
+.card-body {
+    color: var(--theme-text-primary);
+}
+
+.card-body p {
+    margin-bottom: var(--spacing-3);
+    line-height: var(--line-height-relaxed);
+}
+
+.card-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Card Footer */
+.card-footer {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+    padding-top: var(--spacing-3);
+    border-top: 1px solid var(--theme-border-primary);
+}
+
+/* ============================================
+   Interactive Cards
+   ============================================ */
+.card--clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.card--clickable:active {
+    transform: scale(0.98);
+}
+
+/* ============================================
+   Card Grid
+   ============================================ */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-5);
+}
+
+/* ============================================
+   Welcome Card (Legacy)
+   ============================================ */
+.welcome-card {
+    background: white;
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    margin-bottom: var(--spacing-6);
+}
+
+.welcome-card h1 {
+    font-size: var(--font-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--theme-text-primary);
+    margin-bottom: var(--spacing-3);
+}
+
+.welcome-card p {
+    font-size: var(--font-lg);
+    color: var(--theme-text-secondary);
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picker Wheel - Random Choice Generator</title>
+    <link rel="stylesheet" href="../shared/styles/main.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- 导航栏样式必须最后加载，确保优先级最高 -->
+    <link rel="stylesheet" href="../shared/styles/components/navigation.css">
+    <script src="../shared/scripts/navigation-loader.js" defer></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎡</text></svg>">
+</head>
+<body data-page="picker-wheel">
+    <!-- 导航栏将由 navigation-loader.js 自动加载 -->
+    
+    <div class="app-content">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Picker <span class="highlight">Wheel</span></h1>
+            <p class="hero-subtitle">Spin the wheel and let fate decide</p>
+        </div>
+
+        <div class="container">
+            <div class="main-content">
+            <div class="wheel-section">
+                <div class="wheel-wrapper">
+                    <div class="wheel-container">
+                        <canvas id="wheelCanvas" width="1400" height="1400"></canvas>
+                        <button id="spinBtn" class="center-spin-btn">SPIN</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="right-panel">
+            <div class="input-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="inputs">Inputs</button>
+                    <button class="tab-btn" data-tab="settings">Settings</button>
+                </div>
+
+                <div id="inputs-tab" class="tab-content active">
+                    <!-- Wheel Selector -->
+                    <div class="wheel-selector">
+                        <div class="custom-select-wrapper">
+                            <div id="wheelSelect" class="custom-select">
+                                <div class="select-trigger">
+                                    <span class="select-text">Wheel 1</span>
+                                    <svg class="select-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                        <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="select-dropdown">
+                                    <div class="select-options"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="renameWheelBtn" class="icon-btn" title="Edit wheel">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M11.5 2.5L13.5 4.5L5 13H3V11L11.5 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button id="newWheelBtn" class="icon-btn primary" title="New wheel">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <button id="deleteWheelBtn" class="icon-btn danger" title="Delete wheel">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M3 4H13M5 4V3H11V4M6 7V11M10 7V11M5 4L5.5 12H10.5L11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="input-controls">
+                        <input type="text" id="newItemInput" placeholder="Add a choice..." maxlength="50">
+                        <button id="addBtn" class="icon-btn primary" title="Add Input">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <ul id="inputList" class="input-list">
+                        <!-- List items will be added here -->
+                    </ul>
+                </div>
+
+                <div id="settings-tab" class="tab-content">
+                    <div class="setting-group">
+                        <div class="setting-header">
+                            <label>Spin Duration</label>
+                            <span id="durationValue" class="setting-value">3s</span>
+                        </div>
+                        <input type="range" id="durationRange" min="1" max="10" value="3" step="1">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="soundToggle" checked class="checkbox-input">
+                            <span class="checkbox-custom"></span>
+                            <span>Enable Sound</span>
+                        </label>
+                    </div>
+                </div>
+            </div><!-- End right-panel -->
+        </div><!-- End main-content -->
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-icon">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="url(#iconGradient)"/>
+                    <path d="M25 40L35 50L55 30" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="iconGradient" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#007AFF"/>
+                            <stop offset="100%" stop-color="#5AC8FA"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h2 class="modal-title">Today's Host</h2>
+            <div id="winnerResult" class="winner-text"></div>
+            <div class="modal-actions">
+                <button id="closeResultBtn" class="modal-btn secondary">Close</button>
+                <button id="removeWinnerBtn" class="modal-btn primary">Unmark & Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Wheel Config Modal -->
+    <div id="editWheelModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 450px;">
+            <h2 class="modal-title" style="margin-bottom: 8px;">Edit Wheel Config</h2>
+            <p class="modal-hint" style="margin-bottom: 24px;">Configure this wheel's settings</p>
+            
+            <div class="modal-form-group">
+                <label class="modal-label">Wheel Name</label>
+                <input type="text" id="editWheelNameInput" class="modal-input" placeholder="Wheel name..." maxlength="30">
+            </div>
+            
+            <div class="modal-form-group">
+                <label class="modal-label">Result Title</label>
+                <input type="text" id="editResultTitleInput" class="modal-input" placeholder="Winner" maxlength="30">
+            </div>
+            
+            <div class="modal-actions">
+                <button id="cancelEditBtn" class="modal-btn secondary">Cancel</button>
+                <button id="confirmEditBtn" class="modal-btn primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Wheel Modal -->
+    <div id="newWheelModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 450px;">
+            <h2 class="modal-title" style="margin-bottom: 8px;">Create New Wheel</h2>
+            <p class="modal-hint" style="margin-bottom: 24px;">Configure your new wheel</p>
+            
+            <div class="modal-form-group">
+                <label class="modal-label">Wheel Name</label>
+                <input type="text" id="newWheelInput" class="modal-input" placeholder="Wheel name..." maxlength="30">
+            </div>
+            
+            <div class="modal-form-group">
+                <label class="modal-label">Result Title</label>
+                <input type="text" id="newWheelResultTitleInput" class="modal-input" placeholder="Winner" maxlength="30">
+            </div>
+            
+            <div class="modal-actions">
+                <button id="cancelNewWheelBtn" class="modal-btn secondary">Cancel</button>
+                <button id="confirmNewWheelBtn" class="modal-btn primary">Create</button>
+            </div>
+        </div>
+    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Wheel Confirmation Modal -->
+    <div id="deleteWheelModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 420px;">
+            <h2 class="modal-title" style="margin-bottom: 8px;">Delete Wheel?</h2>
+            <p class="modal-hint" style="margin-bottom: 12px;">Are you sure you want to delete</p>
+            <p id="deleteWheelName" style="font-weight: 600; font-size: 16px; color: var(--theme-text-primary); margin-bottom: 12px;"></p>
+            <p class="modal-hint warning-text" style="margin-bottom: 24px; color: var(--theme-danger); font-weight: 500;">This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteBtn" class="modal-btn secondary">Cancel</button>
+                <button id="confirmDeleteBtn" class="modal-btn danger">Delete</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="../shared/scripts/cloudManager.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

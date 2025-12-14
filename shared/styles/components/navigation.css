@@ -1,0 +1,237 @@
+/**
+ * ============================================
+ * 🧭 NAVIGATION COMPONENT - Apple 风格升级版
+ * ============================================
+ * 参考 Apple 官网：14px 字体，柔和阴影，流畅动效
+ * ============================================
+ */
+
+/* ============================================
+   Container
+   ============================================ */
+.global-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05),
+                0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    z-index: 9999;
+    
+    /* 统一字体设置 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .global-nav {
+        background: rgba(29, 29, 31, 0.8);
+        box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05),
+                    0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* ============================================
+   Content Wrapper
+   ============================================ */
+.global-nav__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 980px;
+    height: 48px;
+    margin: 0 auto;
+    padding: 0 22px;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   List
+   ============================================ */
+.global-nav__list {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 8px;
+}
+
+.global-nav__list--left {
+    flex: 1;
+}
+
+.global-nav__list li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ============================================
+   Links - 增强视觉效果
+   ============================================ */
+.global-nav__content a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 14px;
+    
+    /* 字体 */
+    font-weight: 400;
+    line-height: 48px !important;
+    letter-spacing: -0.02em;
+    
+    /* 颜色 */
+    color: #1d1d1f;
+    
+    /* 行为 */
+    text-decoration: none !important;
+    white-space: nowrap;
+    cursor: pointer;
+    opacity: 0.88;
+    border-radius: 8px;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 悬停效果 - 背景高亮 + 阴影 */
+.global-nav__content a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.global-nav__content a:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.global-nav__content a:hover {
+    opacity: 1;
+    text-decoration: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 激活态 - 按下效果 */
+.global-nav__content a:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+}
+
+/* 当前页面高亮 */
+.global-nav__content a.active {
+    opacity: 1;
+    font-weight: 500;
+    color: #007aff;
+}
+
+.global-nav__content a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 14px;
+    right: 14px;
+    height: 2px;
+    background: #007aff;
+    border-radius: 2px 2px 0 0;
+}
+
+/* Settings 按钮特殊样式 */
+.global-nav__list--right a {
+    padding: 0 18px;
+    font-weight: 500;
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+    .global-nav__content a {
+        color: #f5f5f7;
+    }
+    
+    .global-nav__content a::before {
+        background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .global-nav__content a:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .global-nav__content a.active {
+        color: #0a84ff;
+    }
+    
+    .global-nav__content a.active::after {
+        background: #0a84ff;
+    }
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 833px) {
+    .global-nav {
+        height: 44px;
+    }
+    
+    .global-nav__content {
+        padding: 0 16px;
+        height: 44px;
+    }
+    
+    .global-nav__list {
+        height: 44px;
+        gap: 4px;
+    }
+    
+    .global-nav__content a {
+        padding: 0 10px;
+        height: 44px;
+        line-height: 44px !important;
+    }
+    
+    .global-nav {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 734px) {
+    .global-nav__list {
+        display: none;
+    }
+    
+    .global-nav__list--right {
+        display: flex;
+    }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+.global-nav__content a:focus-visible {
+    outline: 2px solid #0071e3;
+    outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .global-nav,
+    .global-nav__content a {
+        transition: none;
+    }
+}
+
+@media print {
+    .global-nav {
+        display: none;
+    }
+}
