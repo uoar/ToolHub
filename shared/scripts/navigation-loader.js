@@ -4,7 +4,11 @@
  */
 (function() {
     const currentPath = window.location.pathname;
-    const isRootPage = currentPath.endsWith('/pickerWheel/') || currentPath.endsWith('/pickerWheel/index.html') || currentPath.endsWith('pickerWheel\\index.html');
+    // 检测是否在根目录（ToolHub文件夹下的 index.html）
+    const isRootPage = currentPath.endsWith('/ToolHub/') || 
+                       currentPath.endsWith('/ToolHub/index.html') || 
+                       currentPath.endsWith('ToolHub\\index.html') ||
+                       currentPath.endsWith('/index.html') && !currentPath.includes('/picker-wheel/') && !currentPath.includes('/json-parser/') && !currentPath.includes('/settings/');
     const pathPrefix = isRootPage ? '' : '../';
     
     const navigationHTML = `
