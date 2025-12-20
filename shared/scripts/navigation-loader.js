@@ -1,6 +1,6 @@
 /**
- * 导航栏加载器 - 简化版
- * 不使用 .global-nav__link，直接用 a 标签让 CSS 更简单
+ * 导航栏加载器 - Apple 风格响应式版
+ * 支持移动端汉堡菜单
  */
 (function() {
     const currentPath = window.location.pathname;
@@ -8,31 +8,113 @@
     const isRootPage = currentPath.endsWith('/ToolHub/') || 
                        currentPath.endsWith('/ToolHub/index.html') || 
                        currentPath.endsWith('ToolHub\\index.html') ||
-                       currentPath.endsWith('/index.html') && !currentPath.includes('/picker-wheel/') && !currentPath.includes('/json-parser/') && !currentPath.includes('/settings/');
+                       currentPath.endsWith('/index.html') && !currentPath.includes('/picker-wheel/') && !currentPath.includes('/json-parser/') && !currentPath.includes('/settings/') && !currentPath.includes('/pass-manager/');
     const pathPrefix = isRootPage ? '' : '../';
     
     const navigationHTML = `
 <nav class="global-nav">
-    <div class="global-nav__content">
-        <ul class="global-nav__list global-nav__list--left">
-            <li><a href="${pathPrefix}index.html" data-page="home">Home</a></li>
-            <li><a href="${pathPrefix}picker-wheel/index.html" data-page="picker-wheel">Picker Wheel</a></li>
-            <li><a href="${pathPrefix}json-parser/index.html" data-page="json-parser">JSON Parser</a></li>
+    <div class="nav-content">
+        <!-- Left: Home link -->
+        <a href="${pathPrefix}index.html" class="nav-home" data-page="home">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.75 16.5V9H11.25V16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        
+        <!-- Center: Desktop nav links (hidden on mobile) -->
+        <ul class="nav-list nav-desktop">
+            <li><a href="${pathPrefix}picker-wheel/index.html" class="nav-item" data-page="picker-wheel">Picker Wheel</a></li>
+            <li><a href="${pathPrefix}json-parser/index.html" class="nav-item" data-page="json-parser">JSON Parser</a></li>
+            <li><a href="${pathPrefix}pass-manager/index.html" class="nav-item" data-page="pass-manager">Pass Manager</a></li>
         </ul>
-        <div class="global-nav__list global-nav__list--right">
-            <a href="${pathPrefix}settings/index.html" data-page="settings">Settings</a>
+        
+        <!-- Right: Settings + Mobile menu button -->
+        <div class="nav-right">
+            <a href="${pathPrefix}settings/index.html" class="nav-settings-btn" data-page="settings">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M13.5 8.5L14.5 9.5C14.7 9.7 14.7 10 14.6 10.3L13.4 12.3C13.3 12.5 13 12.6 12.8 12.5L11.5 12C11.1 12.3 10.7 12.5 10.3 12.7L10 14.1C10 14.3 9.8 14.5 9.5 14.5H6.5C6.2 14.5 6 14.3 6 14.1L5.7 12.7C5.3 12.5 4.9 12.3 4.5 12L3.2 12.5C3 12.6 2.7 12.5 2.6 12.3L1.4 10.3C1.3 10 1.3 9.7 1.5 9.5L2.5 8.5C2.5 8.3 2.5 8.2 2.5 8C2.5 7.8 2.5 7.7 2.5 7.5L1.5 6.5C1.3 6.3 1.3 6 1.4 5.7L2.6 3.7C2.7 3.5 3 3.4 3.2 3.5L4.5 4C4.9 3.7 5.3 3.5 5.7 3.3L6 1.9C6 1.7 6.2 1.5 6.5 1.5H9.5C9.8 1.5 10 1.7 10 1.9L10.3 3.3C10.7 3.5 11.1 3.7 11.5 4L12.8 3.5C13 3.4 13.3 3.5 13.4 3.7L14.6 5.7C14.7 6 14.7 6.3 14.5 6.5L13.5 7.5C13.5 7.7 13.5 7.8 13.5 8C13.5 8.2 13.5 8.3 13.5 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="settings-text">Settings</span>
+            </a>
+            
+            <!-- Mobile menu toggle button -->
+            <button class="nav-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <svg class="menu-icon-open" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <svg class="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display: none;">
+                    <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </button>
         </div>
+    </div>
+    
+    <!-- Mobile dropdown menu -->
+    <div class="nav-mobile-menu">
+        <ul class="nav-mobile-list">
+            <li><a href="${pathPrefix}picker-wheel/index.html" class="nav-mobile-item" data-page="picker-wheel">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M9 5V9L12 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Picker Wheel
+            </a></li>
+            <li><a href="${pathPrefix}json-parser/index.html" class="nav-mobile-item" data-page="json-parser">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M5 3C3.5 3 3 4 3 5V7C3 8 2 9 1 9C2 9 3 10 3 11V13C3 14 3.5 15 5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M13 3C14.5 3 15 4 15 5V7C15 8 16 9 17 9C16 9 15 10 15 11V13C15 14 14.5 15 13 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                JSON Parser
+            </a></li>
+            <li><a href="${pathPrefix}pass-manager/index.html" class="nav-mobile-item" data-page="pass-manager">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <rect x="3" y="7" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M6 7V5C6 3.34315 7.34315 2 9 2C10.6569 2 12 3.34315 12 5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="9" cy="11" r="1.5" fill="currentColor"/>
+                </svg>
+                Pass Manager
+            </a></li>
+        </ul>
     </div>
 </nav>
     `;
 
     document.body.insertAdjacentHTML('afterbegin', navigationHTML);
 
+    // Highlight current page
     const currentPage = document.body.getAttribute('data-page');
     if (currentPage) {
-        document.querySelectorAll('.global-nav__content a[data-page]').forEach(item => {
+        document.querySelectorAll('[data-page]').forEach(item => {
             if (item.getAttribute('data-page') === currentPage) {
                 item.classList.add('active');
+            }
+        });
+    }
+    
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.nav-menu-toggle');
+    const mobileMenu = document.querySelector('.nav-mobile-menu');
+    const openIcon = document.querySelector('.menu-icon-open');
+    const closeIcon = document.querySelector('.menu-icon-close');
+    
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', isOpen);
+            openIcon.style.display = isOpen ? 'none' : 'block';
+            closeIcon.style.display = isOpen ? 'block' : 'none';
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                openIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
             }
         });
     }

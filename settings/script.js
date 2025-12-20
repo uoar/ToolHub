@@ -137,6 +137,16 @@ class SettingsPage {
     syncBtn.textContent = 'Checking...';
     
     try {
+      // Check if this is a subsequent sync (not initial)
+      if (window.cloudManager.hasCompletedInitialSync()) {
+        // Subsequent sync: directly upload local to cloud
+        await this.performAutoSync();
+        this.showToast('Synced to cloud ✓');
+        this.updateStatus();
+        return;
+      }
+      
+      // Initial sync: show selection dialog
       const binId = window.cloudManager.config.binId;
       const masterKey = window.cloudManager.config.masterKey;
       
@@ -178,23 +188,25 @@ class SettingsPage {
       }
       
       if (cloudModules.length === 0) {
-        // Cloud is empty, upload local directly
+        // Cloud is empty, upload local directly and mark initial sync done
         await this.uploadToCloud(localData);
+        window.cloudManager.markInitialSyncCompleted();
         this.showToast('Local data uploaded to cloud');
         this.updateStatus();
         return;
       }
       
       if (localModules.length === 0) {
-        // Local is empty, download cloud directly
+        // Local is empty, download cloud directly and mark initial sync done
         this.applyCloudData(cloudData);
         this.applyConfigToAllTools();
+        window.cloudManager.markInitialSyncCompleted();
         this.showToast('Cloud data downloaded');
         this.updateStatus();
         return;
       }
       
-      // Both have data, show module selection dialog
+      // Both have data, show module selection dialog (initial sync)
       this.showModuleSyncDialog(localData, cloudData);
       
     } catch (error) {
@@ -212,6 +224,14 @@ class SettingsPage {
       `;
     }
   }
+  
+  /**
+   * Perform auto-sync: upload local data to cloud without user interaction
+   */
+  async performAutoSync() {
+    const localData = this.getAllLocalData();
+    await this.uploadToCloud(localData);
+  }
 
   getAllLocalData() {
     const allData = {};
@@ -220,6 +240,12 @@ class SettingsPage {
     const pickerWheelData = localStorage.getItem('pickerWheel');
     if (pickerWheelData) {
       allData.pickerWheel = JSON.parse(pickerWheelData);
+    }
+    
+    // Pass Manager data (encrypted vault - safe to sync)
+    const passManagerData = localStorage.getItem('passManager');
+    if (passManagerData) {
+      allData.passManager = JSON.parse(passManagerData);
     }
     
     // Add more tools here as they are created
@@ -285,8 +311,12 @@ class SettingsPage {
       const cloudSummary = this.getModuleSummary(module.name, module.cloudData);
       const displayName = this.formatModuleName(module.name);
       
-      // Determine default selection (prefer local if both exist)
-      const defaultLocal = module.hasLocal;
+      // Determine default selection
+      // passManager defaults to cloud (encrypted data is safe to sync)
+      // Other modules default to local
+      const defaultLocal = module.name === 'passManager' 
+        ? !module.hasCloud && module.hasLocal  // passManager prefers cloud
+        : module.hasLocal;                      // others prefer local
       
       moduleItem.innerHTML = `
         <div class="module-header">
@@ -330,6 +360,14 @@ class SettingsPage {
         const wheelCount = data.wheels?.length || 0;
         return `${wheelCount} wheel${wheelCount !== 1 ? 's' : ''}`;
       
+      case 'passManager':
+        // Encrypted vault - show if exists with last modified time
+        if (data.vault) {
+          const modified = data.lastModified ? new Date(data.lastModified).toLocaleDateString() : 'Unknown';
+          return `Encrypted vault (${modified})`;
+        }
+        return 'Empty';
+      
       case 'jsonParser':
         return data.settings ? 'Has settings' : 'Empty';
       
@@ -344,6 +382,7 @@ class SettingsPage {
   formatModuleName(moduleName) {
     const nameMap = {
       'pickerWheel': 'Picker Wheel',
+      'passManager': 'Pass Manager 🔐',
       'jsonParser': 'JSON Parser',
       'cloudConfig': 'Cloud Config'
     };
@@ -384,13 +423,16 @@ class SettingsPage {
       // Upload merged config to cloud
       await this.uploadToCloud(mergedConfig);
       
+      // Mark initial sync as completed (this was the first sync)
+      window.cloudManager.markInitialSyncCompleted();
+      
       // Apply to all tools
       this.applyConfigToAllTools();
       
       // Hide dialog
       this.hideModuleSyncDialog();
       
-      this.showToast('Sync completed successfully!');
+      this.showToast('Initial sync completed! Future syncs will be automatic.');
       this.updateStatus();
       
     } catch (error) {
@@ -461,6 +503,12 @@ class SettingsPage {
       allData.pickerWheel = JSON.parse(pickerWheelData);
     }
     
+    // Pass Manager (encrypted vault - safe to export)
+    const passManagerData = localStorage.getItem('passManager');
+    if (passManagerData) {
+      allData.passManager = JSON.parse(passManagerData);
+    }
+    
     // Add cloud config
     allData.cloudConfig = window.cloudManager.config;
     
@@ -505,6 +553,11 @@ class SettingsPage {
       // Import each tool's data
       if (config.pickerWheel) {
         localStorage.setItem('pickerWheel', JSON.stringify(config.pickerWheel));
+      }
+      
+      // Import Pass Manager data (encrypted vault)
+      if (config.passManager) {
+        localStorage.setItem('passManager', JSON.stringify(config.passManager));
       }
       
       // Import cloud config

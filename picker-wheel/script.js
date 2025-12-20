@@ -201,6 +201,24 @@ function clearDebugLogs() {
     localStorage.removeItem(DEBUG_LOG_KEY);
 }
 
+/**
+ * Trigger cloud auto-sync after important operations
+ * Only syncs if cloud is configured and initial sync is done
+ */
+function triggerAutoSync() {
+    if (window.cloudManager && 
+        window.cloudManager.isConfigured() && 
+        window.cloudManager.hasCompletedInitialSync()) {
+        // Debounce: wait 1 second before syncing
+        if (window._autoSyncTimeout) {
+            clearTimeout(window._autoSyncTimeout);
+        }
+        window._autoSyncTimeout = setTimeout(() => {
+            window.cloudManager.autoSync();
+        }, 1000);
+    }
+}
+
 
 
 
@@ -274,7 +292,14 @@ function init() {
     // Auto-save to localStorage every 10 seconds
     setInterval(() => {
         const data = dataManager.export();
-        localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(data));
+        const existingData = localStorage.getItem(AUTO_SAVE_KEY);
+        const newDataStr = JSON.stringify(data);
+        
+        // Only save and sync if data actually changed
+        if (existingData !== newDataStr) {
+            localStorage.setItem(AUTO_SAVE_KEY, newDataStr);
+            triggerAutoSync();
+        }
     }, 10000);
     
     // Save data when page is closing
@@ -884,6 +909,11 @@ function setupEventListeners() {
         });
         renderWheelSelector();
         document.getElementById('editWheelModal').style.display = 'none';
+        
+        // Save to localStorage immediately and trigger cloud sync
+        const editData = dataManager.export();
+        localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(editData));
+        triggerAutoSync();
     });
     
     document.getElementById('editWheelModal').addEventListener('click', (e) => {
@@ -911,6 +941,11 @@ function setupEventListeners() {
         wheelSelect.value = newId;
         loadWheel(newId);
         document.getElementById('newWheelModal').style.display = 'none';
+        
+        // Save to localStorage immediately and trigger cloud sync
+        const newWheelData = dataManager.export();
+        localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(newWheelData));
+        triggerAutoSync();
     });
     
     document.getElementById('newWheelModal').addEventListener('click', (e) => {
@@ -1167,5 +1202,8 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
         // Save to localStorage
         const data = dataManager.export();
         localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(data));
+        
+        // Trigger cloud auto-sync
+        triggerAutoSync();
     }
 });
